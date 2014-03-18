@@ -21,8 +21,10 @@ casper.on("page.error", function(msg, trace) {
 
 var url = 'http://login.rutracker.org/forum/login.php';
 var fs = require('fs');
-var login = 'your_login';
-var password = 'your_pass';
+
+var login = 'nahimka';
+var password = '4uozz';
+var cookies;
 
 phantom.cookiesEnabled = true;
 
@@ -49,12 +51,17 @@ casper.start(url, function() {
 
 casper.then(function()
 {
+   
     fs.write("test.html", this.getHTML(), "w");
+
 });
 
 casper.then(function(){
     this.capture('login_after_reload_before.png');
     console.log(this.getCurrentUrl());
+    cookies = JSON.stringify(phantom.cookies);
+    fs.write("cookies.txt", cookies, 644);
+
 });
 
 casper.then(function(){
